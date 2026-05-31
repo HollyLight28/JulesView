@@ -155,6 +155,10 @@ class MainActivity : Activity() {
         mWebView.settings.domStorageEnabled = true
         mWebView.settings.setAppCacheEnabled(true)
         mWebView.settings.databaseEnabled = true
+        mWebView.settings.userAgentString = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
+        mWebView.settings.javaScriptCanOpenWindowsAutomatically = true
+        mWebView.settings.allowFileAccess = true
+        mWebView.settings.allowContentAccess = true
         //mWebView.getSettings().setDatabasePath(
         //        this.getFilesDir().getPath() + this.getPackageName() + "/databases/");
 

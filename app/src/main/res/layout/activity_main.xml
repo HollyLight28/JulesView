@@ -8,12 +8,23 @@
     <RelativeLayout
         android:id="@+id/layout_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <WebView
-            android:id="@+id/webview"
-            android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:padding="12dp">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent">
+
+            <WebView
+                android:id="@+id/webview"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
         <RelativeLayout
             android:id="@+id/layout_splash"
             android:layout_width="match_parent"
@@ -53,6 +64,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
