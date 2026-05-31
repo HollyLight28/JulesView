@@ -9,7 +9,7 @@
         <!-- Edge-to-Edge settings -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowBackground">#000000</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
     <style name="Button1Style" parent="Theme.AppCompat.Light">
