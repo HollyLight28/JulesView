@@ -11,19 +11,11 @@
         android:layout_height="match_parent"
         android:background="#000000">
 
-        <com.google.android.material.card.MaterialCardView
+        <WebView
+            android:id="@+id/webview"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:shapeAppearanceOverlay="@style/TopRoundedCorners"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@android:color/transparent">
-
-            <WebView
-                android:id="@+id/webview"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.google.android.material.card.MaterialCardView>
+            android:layout_height="match_parent" />
             <RelativeLayout
                 android:id="@+id/layout_splash"
                 android:layout_width="match_parent"

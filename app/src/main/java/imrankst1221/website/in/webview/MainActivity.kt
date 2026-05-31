@@ -38,6 +38,9 @@ import java.util.*
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
 
+import android.graphics.Outline
+import android.view.ViewOutlineProvider
+
 class MainActivity : Activity() {
     private lateinit var mContext: Context
     internal var mLoaded = false
@@ -66,9 +69,13 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            window.decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            )
         }
         
         setContentView(R.layout.activity_main)
@@ -77,6 +84,18 @@ class MainActivity : Activity() {
 
         mContext = this
         mWebView = findViewById<View>(R.id.webview) as WebView
+
+        // Round ONLY top corners via OutlineProvider (Senior way)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val radius = 64f 
+            mWebView.outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    outline.setRoundRect(0, 0, view.width, view.height + radius.toInt(), radius)
+                }
+            }
+            mWebView.clipToOutline = true
+        }
+
         prgs = findViewById<View>(R.id.progressBar) as ProgressBar
         btnTryAgain = findViewById<View>(R.id.btn_try_again) as Button
         viewSplash = findViewById(R.id.view_splash) as View
