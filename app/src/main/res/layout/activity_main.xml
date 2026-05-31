@@ -9,16 +9,12 @@
         android:id="@+id/layout_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
-        android:paddingTop="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="0dp">
+        android:background="#000000">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="24dp"
+            app:shapeAppearanceOverlay="@style/TopRoundedCorners"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@android:color/transparent">
 
@@ -27,7 +23,7 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
             <RelativeLayout
                 android:id="@+id/layout_splash"
                 android:layout_width="match_parent"

@@ -64,6 +64,13 @@ class MainActivity : Activity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+        }
+        
         setContentView(R.layout.activity_main)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)

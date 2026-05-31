@@ -7,6 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="TopRoundedCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <style name="Button1Style" parent="Theme.AppCompat.Light">
