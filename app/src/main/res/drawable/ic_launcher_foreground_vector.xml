@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background to ensure it's black -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,0h108v108h-108z" />
+        
+    <!-- This is a placeholder for the octopus. 
+         Since I cannot convert JPG to Vector easily here, 
+         I will use an approach that keeps the logo centered and scaled. -->
+</vector>
