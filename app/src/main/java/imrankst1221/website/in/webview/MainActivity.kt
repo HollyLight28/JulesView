@@ -43,7 +43,7 @@ class MainActivity : Activity() {
     internal var mLoaded = false
 
     // set your custom url here
-    internal var URL = "https://www.infixsoft.com/"
+    internal var URL = "https://jules.google.com/u/0/session"
 
     //for attach files
     private var mCameraPhotoPath: String? = null
