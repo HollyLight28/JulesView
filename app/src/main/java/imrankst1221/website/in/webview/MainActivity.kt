@@ -110,22 +110,14 @@ class MainActivity : Activity() {
 
 
     private fun requestForWebview() {
-
         if (!mLoaded) {
             requestWebView()
-            Handler().postDelayed({
-                prgs.visibility = View.VISIBLE
-                //viewSplash.getBackground().setAlpha(145);
-                mWebView.visibility = View.VISIBLE
-            }, 3000)
-
         } else {
             mWebView.visibility = View.VISIBLE
             prgs.visibility = View.GONE
             layoutSplash.visibility = View.GONE
             layoutNoInternet.visibility = View.GONE
         }
-
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -159,6 +151,10 @@ class MainActivity : Activity() {
         mWebView.settings.javaScriptCanOpenWindowsAutomatically = true
         mWebView.settings.allowFileAccess = true
         mWebView.settings.allowContentAccess = true
+        CookieManager.getInstance().setAcceptCookie(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(mWebView, true)
+        }
         //mWebView.getSettings().setDatabasePath(
         //        this.getFilesDir().getPath() + this.getPackageName() + "/databases/");
 
@@ -224,11 +220,12 @@ class MainActivity : Activity() {
                 if (prgs.visibility == View.VISIBLE)
                     prgs.visibility = View.GONE
 
-                // check if layoutSplash is still there, get it away!
-                Handler().postDelayed({
-                    layoutSplash.visibility = View.GONE
-                    //viewSplash.getBackground().setAlpha(255);
-                }, 2000)
+                layoutSplash.visibility = View.GONE
+                mWebView.visibility = View.VISIBLE
+                
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    CookieManager.getInstance().flush()
+                }
             }
         }
 
