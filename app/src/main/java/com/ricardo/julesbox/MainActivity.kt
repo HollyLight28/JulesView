@@ -1,4 +1,4 @@
-package imrankst1221.website.in.webview
+package com.ricardo.julesbox
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -508,5 +508,4 @@ class MainActivity : Activity() {
             return available
         }
     }
-
 }
