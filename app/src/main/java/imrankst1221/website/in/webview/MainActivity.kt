@@ -1,4 +1,4 @@
-package imrankst1221.website.`in`.webview
+package imrankst1221.website.in.webview
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -40,6 +40,7 @@ import javax.crypto.spec.SecretKeySpec
 
 import android.graphics.Outline
 import android.view.ViewOutlineProvider
+import com.ricardo.julesbox.R
 
 class MainActivity : Activity() {
     private lateinit var mContext: Context
