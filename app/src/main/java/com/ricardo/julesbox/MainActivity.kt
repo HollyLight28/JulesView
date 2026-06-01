@@ -17,7 +17,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.webkit.*
-import android.webkit.WebSettings.RenderPriority
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -48,14 +47,12 @@ class MainActivity : Activity() {
     private lateinit var layoutSplash: RelativeLayout
     private lateinit var layoutNoInternet: RelativeLayout
 
-    // Gesture detection for swipes
     private lateinit var gestureDetector: GestureDetector
 
     @SuppressLint("SetJavaScriptEnabled", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // 1. FULL EDGE-TO-EDGE MODE (Senior way)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
@@ -68,13 +65,12 @@ class MainActivity : Activity() {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         mContext = this
-        mWebView = findViewById<View>(R.id.webview) as WebView
-        prgs = findViewById<View>(R.id.progressBar) as ProgressBar
-        btnTryAgain = findViewById<View>(R.id.btn_try_again) as Button
-        layoutNoInternet = findViewById<View>(R.id.layout_no_internet) as RelativeLayout
-        layoutSplash = findViewById<View>(R.id.layout_splash) as RelativeLayout
+        mWebView = findViewById(R.id.webview)
+        prgs = findViewById(R.id.progressBar)
+        btnTryAgain = findViewById(R.id.btn_try_again)
+        layoutNoInternet = findViewById(R.id.layout_no_internet)
+        layoutSplash = findViewById(R.id.layout_splash)
 
-        // Round ONLY top corners (Keeping your style)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val radius = 64f 
             mWebView.outlineProvider = object : ViewOutlineProvider() {
@@ -85,9 +81,7 @@ class MainActivity : Activity() {
             mWebView.clipToOutline = true
         }
 
-        // 2. SWIPE GESTURE SETUP
         setupSwipes()
-
         requestForWebview()
 
         btnTryAgain.setOnClickListener {
@@ -111,11 +105,7 @@ class MainActivity : Activity() {
                 
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(vx) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
-                        }
+                        if (diffX > 0) onSwipeRight() else onSwipeLeft()
                         return true
                     }
                 }
@@ -123,53 +113,19 @@ class MainActivity : Activity() {
             }
         })
 
-        mWebView.setOnTouchListener { v, event ->
+        mWebView.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
-            false // return false so webview handles its own clicks
+            false 
         }
     }
 
     private fun onSwipeRight() {
-        Log.d(TAG, "Swipe Right: Attempting to OPEN history")
-        val js = """
-            (function() {
-                const selectors = [
-                    '[aria-label*="Main menu"]', 
-                    '[aria-label*="History"]', 
-                    '[aria-label*="Navigation"]',
-                    'button svg path[d*="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"]'
-                ];
-                for (let s of selectors) {
-                    let btn = document.querySelector(s);
-                    if (btn) {
-                        btn.click();
-                        return;
-                    }
-                }
-            })();
-        """.trimIndent()
+        val js = "(function() { const selectors = ['[aria-label*=\"Main menu\"]', '[aria-label*=\"History\"]', '[aria-label*=\"Navigation\"]', 'button svg path[d*=\"M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z\"]']; for (let s of selectors) { let btn = document.querySelector(s); if (btn) { btn.click(); return; } } })();"
         mWebView.evaluateJavascript(js, null)
     }
 
     private fun onSwipeLeft() {
-        Log.d(TAG, "Swipe Left: Attempting to CLOSE history")
-        val js = """
-            (function() {
-                const selectors = [
-                    '[aria-label*="Close"]', 
-                    '[aria-label*="Dismiss"]',
-                    '[aria-label*="back"]',
-                    'button svg path[d*="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"]'
-                ];
-                for (let s of selectors) {
-                    let btn = document.querySelector(s);
-                    if (btn) {
-                        btn.click();
-                        return;
-                    }
-                }
-            })();
-        """.trimIndent()
+        val js = "(function() { const selectors = ['[aria-label*=\"Close\"]', '[aria-label*=\"Dismiss\"]', '[aria-label*=\"back\"]', 'button svg path[d*=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"]']; for (let s of selectors) { let btn = document.querySelector(s); if (btn) { btn.click(); return; } } })();"
         mWebView.evaluateJavascript(js, null)
     }
 
@@ -199,18 +155,14 @@ class MainActivity : Activity() {
             return
         }
         
-        mWebView.settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            setAppCacheEnabled(true)
-            databaseEnabled = true
-            userAgentString = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
-            javaScriptCanOpenWindowsAutomatically = true
-            allowFileAccess = true
-            allowContentAccess = true
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-            setRenderPriority(RenderPriority.HIGH)
-        }
+        mWebView.settings.javaScriptEnabled = true
+        mWebView.settings.domStorageEnabled = true
+        mWebView.settings.databaseEnabled = true
+        mWebView.settings.userAgentString = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
+        mWebView.settings.javaScriptCanOpenWindowsAutomatically = true
+        mWebView.settings.allowFileAccess = true
+        mWebView.settings.allowContentAccess = true
+        mWebView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 
         CookieManager.getInstance().setAcceptCookie(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
