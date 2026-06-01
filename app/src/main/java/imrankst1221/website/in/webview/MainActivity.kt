@@ -217,7 +217,7 @@ class MainActivity : Activity() {
                 }else{
                     prgs.setVisibility(View.GONE);
                     mWebView.setVisibility(View.GONE);
-                    layoutSplash.setVisibility(View.GONE);
+                    layoutSplash.visibility(View.GONE);
                     layoutNoInternet.setVisibility(View.VISIBLE);
                 }
                 return false;
