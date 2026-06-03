@@ -54,9 +54,11 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         
         try {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            window.statusBarColor = Color.TRANSPARENT
-            window.navigationBarColor = Color.TRANSPARENT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+                window.statusBarColor = Color.TRANSPARENT
+                window.navigationBarColor = Color.TRANSPARENT
+            }
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
@@ -66,7 +68,12 @@ class MainActivity : Activity() {
         }
 
         setContentView(R.layout.activity_main)
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        
+        try {
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        } catch (e: Exception) {
+            Log.e(TAG, "CompatVector failed", e)
+        }
 
         mContext = this
         mWebView = findViewById(R.id.webview)
