@@ -55,7 +55,7 @@ class MainActivity : Activity() {
         
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.statusBarColor = Color.TRANSPARENT
                 window.navigationBarColor = Color.TRANSPARENT
             }
@@ -69,12 +69,6 @@ class MainActivity : Activity() {
 
         setContentView(R.layout.activity_main)
         
-        try {
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        } catch (e: Exception) {
-            Log.e(TAG, "CompatVector failed", e)
-        }
-
         mContext = this
         mWebView = findViewById(R.id.webview)
         prgs = findViewById(R.id.progressBar)
