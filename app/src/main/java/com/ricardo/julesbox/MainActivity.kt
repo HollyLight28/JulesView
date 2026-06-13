@@ -24,6 +24,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -75,6 +77,13 @@ class MainActivity : Activity() {
 
         setContentView(R.layout.activity_main)
         
+        val rootView = findViewById<View>(R.id.swipe_container)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, 0)
+            windowInsets
+        }
+
         mContext = this
         mWebView = findViewById(R.id.webview)
         prgs = findViewById(R.id.progressBar)
