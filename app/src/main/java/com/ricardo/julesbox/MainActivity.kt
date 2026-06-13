@@ -24,6 +24,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -53,6 +55,8 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -60,6 +64,10 @@ class MainActivity : Activity() {
                 window.navigationBarColor = Color.TRANSPARENT
             }
             
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             }
@@ -69,6 +77,13 @@ class MainActivity : Activity() {
 
         setContentView(R.layout.activity_main)
         
+        val rootView = findViewById<View>(R.id.swipe_container)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, 0)
+            windowInsets
+        }
+
         mContext = this
         mWebView = findViewById(R.id.webview)
         prgs = findViewById(R.id.progressBar)
@@ -81,7 +96,7 @@ class MainActivity : Activity() {
             mWebView.outlineProvider = object : ViewOutlineProvider() {
                 override fun getOutline(view: View, outline: Outline) {
                     if (view.width > 0 && view.height > 0) {
-                        outline.setRoundRect(0, 0, view.width, view.height + radius.toInt(), radius)
+                        outline.setRoundRect(0, 0, view.width, view.height, radius)
                     }
                 }
             }
